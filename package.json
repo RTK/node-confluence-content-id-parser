@@ -1,5 +1,5 @@
 {
-    "name": "cli-tool-template",
+    "name": "@ams/cli-tool-template",
     "version": "0.0.1",
     "description": "CLI tool template",
     "main": "dist/main.js",
