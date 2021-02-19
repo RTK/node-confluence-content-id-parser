@@ -2,11 +2,12 @@
     "name": "@ams/cli-tool-template",
     "version": "0.0.1",
     "description": "CLI tool template",
-    "main": "dist/main.js",
+    "main": "dist/src/main.js",
     "bin": {
-        "tool": "bin/tool.ts"
+        "tool": "dist/bin/tool.js"
     },
     "scripts": {
+        "prepack": "tsc --build --clean && tsc",
         "test": "test"
     },
     "repository": {
@@ -20,6 +21,10 @@
     ],
     "author": "Rouven T. Kruse <kruse@adesso-mobile.de>",
     "license": "UNLICENSED",
+    "engines": {
+        "node": ">=15.9.0",
+        "npm": ">=7.5.3"
+    },
     "devDependencies": {
         "@ams/cli-tool-prettier-config": "git+ssh://git@scm.adesso-mobile.de:7999/wt/cli-tool-prettier-config.git#rev/1.0.0",
         "@types/jest": "^26.0.20",
@@ -32,11 +37,6 @@
         "typescript": "^4.1.5"
     },
     "dependencies": {
-        "@ams/cli-toolkit": "git+ssh://git@scm.adesso-mobile.de:7999/wt/cli-toolkit.git"
-    },
-    "peerDependencies": {
-        "@ams/cli-toolkit": "git+ssh://git@scm.adesso-mobile.de:7999/wt/cli-toolkit.git",
-        "ts-node": "^9.1.1",
-        "typescript": "^4.1.5"
+        "@ams/cli-toolkit": "https://depot.adesso-mobile.de/npm/cordova-plugin-kiosk/ams-cli-toolkit-v1.0.0.tgz"
     }
 }

@@ -1,5 +1,5 @@
-import {log, LogLevel} from '@ams/cli-toolkit/src/logger';
+import {LogLevel, writeLoggerOutput} from '@ams/cli-toolkit';
 
 export function test(): void {
-    log(LogLevel.Verbose, 'CLI template started');
+    writeLoggerOutput(LogLevel.Verbose, 'CLI template started');
 }

@@ -1,9 +1,10 @@
-#!/usr/bin/env ts-node
-import {setupDefault} from '@ams/cli-toolkit/src/cli';
+#!/usr/bin/env node
 
-import {test} from 'src/main';
+import {setupCLIDefaults} from '@ams/cli-toolkit';
 
-setupDefault();
+import {test} from '../src/main';
+
+setupCLIDefaults();
 
 test();
 

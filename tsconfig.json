@@ -7,6 +7,14 @@
         "module": "CommonJS",
         "moduleResolution": "Node",
         "outDir": "dist",
+        "rootDir": ".",
+        "strict": true,
         "target": "ES2020"
-    }
+    },
+    "exclude": [
+        "bin/**/*.spec.ts",
+        "bin/**/*.test.ts",
+        "src/**/*.spec.ts",
+        "src/**/*.test.ts"
+    ]
 }
