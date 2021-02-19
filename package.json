@@ -1,10 +1,10 @@
 {
-    "name": "@ams/cli-tool-template",
+    "name": "@ams/cli-tool-content-id-parser",
     "version": "0.0.1",
-    "description": "CLI tool template",
+    "description": "Confluence content id parser from tables",
     "main": "dist/src/main.js",
     "bin": {
-        "tool": "dist/bin/tool.js"
+        "tool": "dist/bin/parser.js"
     },
     "scripts": {
         "prepack": "tsc --build --clean && tsc",
@@ -15,9 +15,9 @@
         "url": "ssh://git@scm.adesso-mobile.de:7999/wt/cli-tool-template.git"
     },
     "keywords": [
-        "CLI",
-        "tool",
-        "template"
+        "confluence",
+        "parser",
+        "content-ids"
     ],
     "author": "Rouven T. Kruse <kruse@adesso-mobile.de>",
     "license": "UNLICENSED",
