@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "baseUrl": ".",
+        "charset": "utf-8",
+        "declaration": true,
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "outDir": "dist",
+        "target": "ES2020"
+    }
+}

@@ -1,0 +1,9 @@
+# IntelliJ
+.idea/
+*.iml
+
+# node.js
+node_modules/
+
+# out
+dist/
