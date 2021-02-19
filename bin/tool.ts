@@ -7,4 +7,3 @@ import {test} from '../src/main';
 setupCLIDefaults();
 
 test();
-
