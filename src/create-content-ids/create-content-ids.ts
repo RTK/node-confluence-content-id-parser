@@ -2,9 +2,35 @@ import {LogLevel, writeLoggerOutput} from '@ams/cli-toolkit';
 
 import * as jsdom from 'jsdom';
 
+/**
+ * String map, maps a content id to a translational expression.
+ */
 type StringMap = Map<string, string>;
+
+/**
+ * Language map, maps a language to a StringMap.
+ */
 export type LangMap = Map<string, StringMap>;
 
+/**
+ * Creates the content id language-mapping from the confluence html.
+ *
+ * It looks for each table matching the recognitionPattern in its first header
+ * column and generates a LangMap from it.
+ *
+ * @example
+ * recognitionPattern: ^Content-Id$
+ *
+ * |Content-Id|en|de|
+ * |t1|hat|Hut|
+ *
+ * Creates a map using "en" and "de" as keys, where as each key references
+ * a string map where the content id ("t1") references the languages translation
+ * such as "hat" or "Hut" depending on the language.
+ *
+ * @param recognitionPattern
+ * @param html
+ */
 export function createContentIds(recognitionPattern: RegExp, html: string): readonly LangMap[] {
     writeLoggerOutput(LogLevel.Verbose, 'Creating content ids from confluence page');
 

@@ -9,7 +9,7 @@
     "scripts": {
         "build": "tsc --build --clean && tsc",
         "prepack": "npm run build",
-        "test": "test"
+        "test": "jest"
     },
     "repository": {
         "type": "git",

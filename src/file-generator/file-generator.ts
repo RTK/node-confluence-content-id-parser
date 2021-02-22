@@ -3,8 +3,18 @@ import {LogLevel, writeLoggerOutput} from '@ams/cli-toolkit';
 import * as fs from 'fs';
 import * as path from 'path';
 
-import type {LangMap} from './create-content-ids';
+import type {LangMap} from '../create-content-ids/create-content-ids';
 
+/**
+ * Generates the output files based on the provided langMap.
+ *
+ * Clears the outpurDirectory at first.
+ * Then proceeds to iterate each language and create a json file of its
+ * mappings.
+ *
+ * @param outputDirectory - Directory path where the files will be created.
+ * @param langMap - Language to String map (see create-content-ids for more info).
+ */
 export function generateFiles(outputDirectory: string, langMap: readonly LangMap[]): void {
     writeLoggerOutput(LogLevel.Verbose, 'Generate translation files');
 
@@ -47,7 +57,12 @@ export function generateFiles(outputDirectory: string, langMap: readonly LangMap
     }
 }
 
-function rmdir(dir: string) {
+/**
+ * Removes provided directory (path) and all of its contents recursively.
+ *
+ * @param dir - Path to directory which will be removed
+ */
+export function rmdir(dir: string): void {
     const files = fs.readdirSync(dir);
 
     for (const file of files) {

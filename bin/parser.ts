@@ -6,9 +6,9 @@ import {
     writeLoggerOutput
 } from '@ams/cli-toolkit';
 
-import {createContentIds, LangMap} from '../src/create-content-ids';
-import {generateFiles} from '../src/file-generator';
-import {requestPage} from '../src/request';
+import {createContentIds, LangMap} from '../src/create-content-ids/create-content-ids';
+import {generateFiles} from '../src/file-generator/file-generator';
+import {requestPage} from '../src/request/request';
 
 setupCLIDefaults();
 

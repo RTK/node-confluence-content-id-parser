@@ -2,7 +2,7 @@ module.exports = {
     preset: 'ts-jest',
     rootDir: '.',
     testEnvironment: 'node',
-    "transformIgnorePatterns": [
+    transformIgnorePatterns: [
         "node_modules/(?!@ams)"
     ]
 };
