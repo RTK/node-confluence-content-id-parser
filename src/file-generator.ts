@@ -1,9 +1,13 @@
+import {LogLevel, writeLoggerOutput} from '@ams/cli-toolkit';
+
 import * as fs from 'fs';
 import * as path from 'path';
 
 import type {LangMap} from './create-content-ids';
 
 export function generateFiles(outputDirectory: string, langMap: readonly LangMap[]): void {
+    writeLoggerOutput(LogLevel.Verbose, 'Generate translation files');
+
     if (fs.existsSync(outputDirectory)) {
         rmdir(outputDirectory);
     }

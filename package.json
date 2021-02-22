@@ -7,7 +7,8 @@
         "tool": "dist/bin/parser.js"
     },
     "scripts": {
-        "prepack": "tsc --build --clean && tsc",
+        "build": "tsc --build --clean && tsc",
+        "prepack": "npm run build",
         "test": "test"
     },
     "repository": {
@@ -28,6 +29,8 @@
     "devDependencies": {
         "@ams/cli-tool-prettier-config": "git+ssh://git@scm.adesso-mobile.de:7999/wt/cli-tool-prettier-config.git#rev/1.0.0",
         "@types/jest": "^26.0.20",
+        "@types/jsdom": "^16.2.6",
+        "@types/node": "^14.14.31",
         "husky": "^4.3.8",
         "jest": "^26.6.3",
         "prettier": "^2.2.1",
@@ -37,6 +40,7 @@
         "typescript": "^4.1.5"
     },
     "dependencies": {
-        "@ams/cli-toolkit": "https://depot.adesso-mobile.de/npm/cordova-plugin-kiosk/ams-cli-toolkit-v1.0.0.tgz"
+        "@ams/cli-toolkit": "https://depot.adesso-mobile.de/npm/cli-toolkit/cli-toolkit-v1.0.0.tgz",
+        "jsdom": "^16.4.0"
     }
 }

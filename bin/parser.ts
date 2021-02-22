@@ -1,9 +1,13 @@
 #!/usr/bin/env node
-
-import {getCLIArgument, setupCLIDefaults} from '@ams/cli-toolkit';
+import {
+    getCLIArgument,
+    LogLevel,
+    setupCLIDefaults,
+    writeLoggerOutput
+} from '@ams/cli-toolkit';
 
 import {createContentIds, LangMap} from '../src/create-content-ids';
-import {generateFiles} from './../src/file-generator';
+import {generateFiles} from '../src/file-generator';
 import {requestPage} from '../src/request';
 
 setupCLIDefaults();
@@ -19,15 +23,18 @@ const recognitionPattern: RegExp = new RegExp(getCLIArgument('recognitionPattern
 let outputDirectory: string | null = getCLIArgument('outputDirectory');
 
 if (!confluenceBaseUri) {
-    throw new Error(`Invalid source uri: "${confluenceBaseUri}"`);
+    writeLoggerOutput(LogLevel.Error, `Invalid source uri: "${confluenceBaseUri}"`);
+    process.exit(1);
 }
 
 if (!confluencePageId || isNaN(parseInt(confluencePageId, 10))) {
-    throw new Error(`Invalid page id: "${confluencePageId}"`);
+    writeLoggerOutput(LogLevel.Error, `Invalid page id: "${confluencePageId}"`);
+    process.exit(2);
 }
 
 if (!confluenceUsername || !confluenceUserToken) {
-    throw new Error(`Missing credentials`);
+    writeLoggerOutput(LogLevel.Error, `Missing credentials`);
+    process.exit(3);
 }
 
 if (!outputDirectory) {
@@ -41,8 +48,9 @@ requestPage(confluenceBaseUri, confluencePageId, confluenceUsername, confluenceU
     .then((langMap: readonly LangMap[]): void => {
         return generateFiles(outputDirectory!, langMap);
     })
-    .catch((err) => {
-        console.error(err);
+    .catch((error: Error | any): void => {
+        writeLoggerOutput(LogLevel.Error, 'An unexpected error occurred');
+        writeLoggerOutput(LogLevel.Verbose, JSON.stringify(error));
 
-        process.exit(1);
+        process.exit(9);
     });

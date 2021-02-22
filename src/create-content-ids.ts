@@ -1,9 +1,13 @@
+import {LogLevel, writeLoggerOutput} from '@ams/cli-toolkit';
+
 import * as jsdom from 'jsdom';
 
 type StringMap = Map<string, string>;
 export type LangMap = Map<string, StringMap>;
 
 export function createContentIds(recognitionPattern: RegExp, html: string): readonly LangMap[] {
+    writeLoggerOutput(LogLevel.Verbose, 'Creating content ids from confluence page');
+
     const dom = new jsdom.JSDOM(html);
 
     const tableCollection: NodeListOf<HTMLTableElement> = dom.window.document.querySelectorAll('table');
