@@ -1,4 +1,5 @@
 module.exports = {
+    injectGlobals: false,
     preset: 'ts-jest',
     rootDir: '.',
     testEnvironment: 'node',

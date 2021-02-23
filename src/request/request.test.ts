@@ -1,5 +1,7 @@
 import {LogLevel, setLoggerLevel} from '@ams/cli-toolkit';
 
+import {describe, expect} from '@jest/globals';
+
 import * as http from 'http';
 
 import {requestPage} from './request';
@@ -8,8 +10,8 @@ describe('request', (): void => {
     setLoggerLevel(LogLevel.Silent);
 
     describe('requestPage()', (): void => {
-        const hostname = 'localhost';
-        const port = 9090;
+        const hostname = '0.0.0.0';
+        const port = 65535;
         const baseUrl = `http://${hostname}:${port}`;
         const html = '<div>test</div>';
 
@@ -43,6 +45,10 @@ describe('request', (): void => {
         beforeEach((): void => {
             authorizationHeader = null;
             url = null;
+        });
+
+        afterAll((): void => {
+            server.close();
         });
 
         it('should request the server with the correct url and authorization header', async (): Promise<void> => {

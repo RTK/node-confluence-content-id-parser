@@ -1,5 +1,7 @@
 import {LogLevel, setLoggerLevel} from '@ams/cli-toolkit';
 
+import {describe, expect} from '@jest/globals';
+
 import * as fs from 'fs';
 import * as path from 'path';
 
