@@ -1,11 +1,13 @@
 # node-confluence-content-id-parser
 
 ## Installation
+
 ```shell
 $ npm install content-id-parser
 ```
 
 ### Usage
+
 ```shell
 $ node-confluence-content-id-parser
   \ --confluence-base-uri=$URI
@@ -18,12 +20,13 @@ $ node-confluence-content-id-parser
 ```
 
 #### Arguments
-Argument | Description | Required | Default value
---- | --- | --- | ---
-confluence-base-uri | The base uri of your confluence instance: protocol, hostname and port | Yes | -
-confluence-page-id | The page id of your contents to be analyzed | Yes | -
-confluence-username | Your confluence username | Yes | -
-confluence-user-token | Your confluence user token | Yes | -
-output-directory | The directory to which your content-id files will be writte | No | output
-recognition-pattern | The pattern (regular expression), which will be used to determine which table contains content-ids | No | `^Content-Id$`
-recognition-flags | The regular expression flags to be applied to the `recognition-pattern` | No | `i` (case insensitive)
+
+| Argument              | Description                                                                                        | Required | Default value          |
+| --------------------- | -------------------------------------------------------------------------------------------------- | -------- | ---------------------- |
+| confluence-base-uri   | The base uri of your confluence instance: protocol, hostname and port                              | Yes      | -                      |
+| confluence-page-id    | The page id of your contents to be analyzed                                                        | Yes      | -                      |
+| confluence-username   | Your confluence username                                                                           | Yes      | -                      |
+| confluence-user-token | Your confluence user token                                                                         | Yes      | -                      |
+| output-directory      | The directory to which your content-id files will be writte                                        | No       | output                 |
+| recognition-pattern   | The pattern (regular expression), which will be used to determine which table contains content-ids | No       | `^Content-Id$`         |
+| recognition-flags     | The regular expression flags to be applied to the `recognition-pattern`                            | No       | `i` (case insensitive) |

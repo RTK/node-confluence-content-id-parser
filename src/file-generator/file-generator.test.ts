@@ -41,11 +41,16 @@ describe('file-generator', (): void => {
 
             generateFiles(outDir, [langMap]);
 
-            const contents: string = fs.readFileSync(path.join(outDir, 'de.json'), 'utf8');
+            const contents: string = fs.readFileSync(
+                path.join(outDir, 'de.json'),
+                'utf8'
+            );
 
-            expect(contents).toBe(JSON.stringify({
-                t1: 'Hut'
-            }));
+            expect(contents).toBe(
+                JSON.stringify({
+                    t1: 'Hut'
+                })
+            );
         });
 
         it('should merge multiple langMaps to one output', (): void => {
@@ -57,12 +62,17 @@ describe('file-generator', (): void => {
 
             generateFiles(outDir, [langMap1, langMap2]);
 
-            const contents: string = fs.readFileSync(path.join(outDir, 'de.json'), 'utf8');
+            const contents: string = fs.readFileSync(
+                path.join(outDir, 'de.json'),
+                'utf8'
+            );
 
-            expect(contents).toBe(JSON.stringify({
-                t1: 'Hut',
-                t2: 'Hit'
-            }));
+            expect(contents).toBe(
+                JSON.stringify({
+                    t1: 'Hut',
+                    t2: 'Hit'
+                })
+            );
         });
     });
 

@@ -15,7 +15,10 @@ import type {LangMap} from '../create-content-ids/create-content-ids';
  * @param outputDirectory - Directory path where the files will be created.
  * @param langMap - Language to String map (see create-content-ids for more info).
  */
-export function generateFiles(outputDirectory: string, langMap: readonly LangMap[]): void {
+export function generateFiles(
+    outputDirectory: string,
+    langMap: readonly LangMap[]
+): void {
     writeLoggerOutput(LogLevel.Verbose, 'Generate translation files');
 
     if (fs.existsSync(outputDirectory)) {

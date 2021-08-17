@@ -6,7 +6,10 @@ import {
     writeLoggerOutput
 } from '@rtk/node-ts-cli-toolkit';
 
-import {createContentIds, LangMap} from '../src/create-content-ids/create-content-ids';
+import {
+    createContentIds,
+    LangMap
+} from '../src/create-content-ids/create-content-ids';
 import {generateFiles} from '../src/file-generator/file-generator';
 import {requestPage} from '../src/request/request';
 
@@ -16,14 +19,22 @@ const confluenceBaseUri: string | null = getCLIArgument('confluenceBaseUri');
 const confluencePageId: string | null = getCLIArgument('confluencePageId');
 
 const confluenceUsername: string | null = getCLIArgument('confluenceUsername');
-const confluenceUserToken: string | null = getCLIArgument('confluenceUserToken');
+const confluenceUserToken: string | null = getCLIArgument(
+    'confluenceUserToken'
+);
 
-const recognitionPattern: RegExp = new RegExp(getCLIArgument('recognitionPattern') ?? '^Content-Id$', getCLIArgument('recognitionFlags') ?? 'i')
+const recognitionPattern: RegExp = new RegExp(
+    getCLIArgument('recognitionPattern') ?? '^Content-Id$',
+    getCLIArgument('recognitionFlags') ?? 'i'
+);
 
 let outputDirectory: string | null = getCLIArgument('outputDirectory');
 
 if (!confluenceBaseUri) {
-    writeLoggerOutput(LogLevel.Error, `Invalid source uri: "${confluenceBaseUri}"`);
+    writeLoggerOutput(
+        LogLevel.Error,
+        `Invalid source uri: "${confluenceBaseUri}"`
+    );
     process.exit(1);
 }
 
@@ -41,7 +52,12 @@ if (!outputDirectory) {
     outputDirectory = 'output';
 }
 
-requestPage(confluenceBaseUri, confluencePageId, confluenceUsername, confluenceUserToken)
+requestPage(
+    confluenceBaseUri,
+    confluencePageId,
+    confluenceUsername,
+    confluenceUserToken
+)
     .then((html: string): readonly LangMap[] => {
         return createContentIds(recognitionPattern, html);
     })
