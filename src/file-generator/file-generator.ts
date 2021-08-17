@@ -1,4 +1,4 @@
-import {LogLevel, writeLoggerOutput} from '@ams/cli-toolkit';
+import {LogLevel, writeLoggerOutput} from '@rtk/node-ts-cli-toolkit';
 
 import * as fs from 'fs';
 import * as path from 'path';

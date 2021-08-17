@@ -1,4 +1,4 @@
-import {LogLevel, setLoggerLevel} from '@ams/cli-toolkit';
+import {LogLevel, setLoggerLevel} from '@rtk/node-ts-cli-toolkit';
 
 import {describe, expect} from '@jest/globals';
 

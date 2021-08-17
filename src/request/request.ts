@@ -1,4 +1,4 @@
-import {LogLevel, writeLoggerOutput} from '@ams/cli-toolkit';
+import {LogLevel, writeLoggerOutput} from '@rtk/node-ts-cli-toolkit';
 
 import * as http from 'http';
 import * as https from 'https';

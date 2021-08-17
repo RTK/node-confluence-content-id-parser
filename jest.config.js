@@ -4,6 +4,6 @@ module.exports = {
     rootDir: '.',
     testEnvironment: 'node',
     transformIgnorePatterns: [
-        "node_modules/(?!@ams)"
+        "node_modules/(?!@rtk)"
     ]
 };

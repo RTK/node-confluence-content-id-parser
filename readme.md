@@ -1,4 +1,4 @@
-# content-id-parser
+# node-confluence-content-id-parser
 
 ## Installation
 ```shell
@@ -7,7 +7,7 @@ $ npm install content-id-parser
 
 ### Usage
 ```shell
-$ content-id-parser
+$ node-confluence-content-id-parser
   \ --confluence-base-uri=$URI
   \ --confluence-page-id=$ID
   \ --confluence-username=$USERNAME

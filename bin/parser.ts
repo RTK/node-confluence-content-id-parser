@@ -4,7 +4,7 @@ import {
     LogLevel,
     setupCLIDefaults,
     writeLoggerOutput
-} from '@ams/cli-toolkit';
+} from '@rtk/node-ts-cli-toolkit';
 
 import {createContentIds, LangMap} from '../src/create-content-ids/create-content-ids';
 import {generateFiles} from '../src/file-generator/file-generator';
