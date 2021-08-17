@@ -3,7 +3,7 @@
 ## Installation
 
 ```shell
-$ npm install content-id-parser
+$ npm install @rtk/node-confluence-content-id-parser
 ```
 
 ### Usage
