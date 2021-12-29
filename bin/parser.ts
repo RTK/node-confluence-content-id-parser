@@ -67,7 +67,13 @@ requestPage(
     confluenceUserToken
 )
     .then((html: string): readonly LangMap[] => {
-        return createContentIds(recognitionPattern, trimContent, identifierColumn, startingColumn, html);
+        return createContentIds(
+            recognitionPattern,
+            trimContent,
+            identifierColumn,
+            startingColumn,
+            html
+        );
     })
     .then((langMap: readonly LangMap[]): void => {
         return generateFiles(outputDirectory!, langMap);
