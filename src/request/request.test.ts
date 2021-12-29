@@ -78,9 +78,7 @@ describe('request', (): void => {
             expect(url).toBe(`/rest/api/content/${pageId}?expand=body.view`);
 
             expect(authorizationHeader).not.toBeNull();
-            expect(authorizationHeader).toBe(
-                'Bearer tokken'
-            );
+            expect(authorizationHeader).toBe('Bearer tokken');
         });
 
         it('should return the pages html', (): void => {
