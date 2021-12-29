@@ -19,19 +19,26 @@ import * as https from 'https';
 export async function requestPage(
     confluenceBaseUri: string,
     confluencePageId: string,
-    confluenceUsername: string,
+    confluenceUsername: string | null,
     confluenceUserToken: string
 ): Promise<string> {
     writeLoggerOutput(LogLevel.Verbose, 'Request confluence page via API');
 
-    const authorizationString = Buffer.from(
-        confluenceUsername + ':' + confluenceUserToken
-    ).toString('base64');
+    let authorizationString;
+
+    if (confluenceUsername) {
+        authorizationString = `Basic ${Buffer.from(
+            confluenceUsername + ':' + confluenceUserToken
+        ).toString('base64')}`;
+    } else {
+        authorizationString = `Bearer ${confluenceUserToken}`;
+    }
+
     const url = `${confluenceBaseUri}/rest/api/content/${confluencePageId}?expand=body.view`;
 
     const options: http.RequestOptions = {
         headers: {
-            Authorization: `Basic ${authorizationString}`
+            Authorization: authorizationString
         }
     };
 

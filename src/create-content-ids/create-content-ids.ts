@@ -29,10 +29,16 @@ export type LangMap = Map<string, StringMap>;
  * such as "hat" or "Hut" depending on the language.
  *
  * @param recognitionPattern
+ * @param trimContent
+ * @param identifierColumnIndex
+ * @param startingColumnIndex
  * @param html
  */
 export function createContentIds(
     recognitionPattern: RegExp,
+    trimContent: boolean,
+    identifierColumnIndex: number,
+    startingColumnIndex: number,
     html: string
 ): readonly LangMap[] {
     writeLoggerOutput(
@@ -74,7 +80,7 @@ export function createContentIds(
                     const languages: string[] = [];
 
                     for (
-                        let headlineIndex = 1;
+                        let headlineIndex = startingColumnIndex;
                         headlineIndex < headlines.length;
                         headlineIndex++
                     ) {
@@ -86,6 +92,11 @@ export function createContentIds(
                             langMap.set(langCode, new Map());
 
                             languages.push(langCode);
+
+                            writeLoggerOutput(
+                                LogLevel.Verbose,
+                                `Detected language ${langCode}`
+                            );
                         }
                     }
 
@@ -98,20 +109,31 @@ export function createContentIds(
                             .item(rowIndex)
                             .querySelectorAll('td');
 
-                        const key: string | null = tdCollection.item(0)
-                            .textContent;
+                        let key: string | null = tdCollection.item(
+                            identifierColumnIndex
+                        ).textContent;
+
+                        if (trimContent && key) {
+                            key = key.trim();
+                        }
 
                         if (key) {
                             for (
-                                let tdIndex = 1;
+                                let tdIndex = startingColumnIndex;
                                 tdIndex < tdCollection.length;
                                 tdIndex++
                             ) {
-                                const langIndex = languages[tdIndex - 1];
-                                const translation:
-                                    | string
-                                    | null = tdCollection.item(tdIndex)
-                                    .textContent;
+                                const langIndex =
+                                    languages[tdIndex - startingColumnIndex];
+
+                                // Fallback to key for easy identification of missing translations
+                                let translation: string | null =
+                                    tdCollection.item(tdIndex).textContent ||
+                                    key;
+
+                                if (trimContent && translation) {
+                                    translation = translation.trim();
+                                }
 
                                 if (langIndex && langMap.has(langIndex)) {
                                     langMap
@@ -123,6 +145,11 @@ export function createContentIds(
                     }
 
                     results.push(langMap);
+                } else {
+                    writeLoggerOutput(
+                        LogLevel.Warn,
+                        'No matches for recognition pattern'
+                    );
                 }
             }
         }

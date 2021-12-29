@@ -30,6 +30,11 @@ const recognitionPattern: RegExp = new RegExp(
 
 let outputDirectory: string | null = getCLIArgument('outputDirectory');
 
+let identifierColumn: number = getCLIArgument('identifierColumn') ?? 0;
+let startingColumn: number = getCLIArgument('startingColumn') ?? 1;
+
+let trimContent: boolean = getCLIArgument('trimContent') !== 'false';
+
 if (!confluenceBaseUri) {
     writeLoggerOutput(
         LogLevel.Error,
@@ -43,8 +48,11 @@ if (!confluencePageId || isNaN(parseInt(confluencePageId, 10))) {
     process.exit(2);
 }
 
-if (!confluenceUsername || !confluenceUserToken) {
-    writeLoggerOutput(LogLevel.Error, `Missing credentials`);
+if (!confluenceUserToken) {
+    writeLoggerOutput(
+        LogLevel.Error,
+        `Missing credentials, supply either username+password or personal access token`
+    );
     process.exit(3);
 }
 
@@ -59,7 +67,13 @@ requestPage(
     confluenceUserToken
 )
     .then((html: string): readonly LangMap[] => {
-        return createContentIds(recognitionPattern, html);
+        return createContentIds(
+            recognitionPattern,
+            trimContent,
+            identifierColumn,
+            startingColumn,
+            html
+        );
     })
     .then((langMap: readonly LangMap[]): void => {
         return generateFiles(outputDirectory!, langMap);
