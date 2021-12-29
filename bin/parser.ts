@@ -43,8 +43,8 @@ if (!confluencePageId || isNaN(parseInt(confluencePageId, 10))) {
     process.exit(2);
 }
 
-if (!confluenceUsername || !confluenceUserToken) {
-    writeLoggerOutput(LogLevel.Error, `Missing credentials`);
+if (!confluenceUserToken) {
+    writeLoggerOutput(LogLevel.Error, `Missing credentials, supply either username+password or personal access token`);
     process.exit(3);
 }
 

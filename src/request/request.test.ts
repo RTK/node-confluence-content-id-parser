@@ -68,6 +68,21 @@ describe('request', (): void => {
             );
         });
 
+        it('should request the server with the correct url and authorization header', async (): Promise<void> => {
+            const pageId = '12345';
+            const token = 'tokken';
+
+            await requestPage(baseUrl, pageId, null, token);
+
+            expect(url).not.toBeNull();
+            expect(url).toBe(`/rest/api/content/${pageId}?expand=body.view`);
+
+            expect(authorizationHeader).not.toBeNull();
+            expect(authorizationHeader).toBe(
+                'Bearer tokken'
+            );
+        });
+
         it('should return the pages html', (): void => {
             const pageId = '12345';
             const username = 'mrTest';
