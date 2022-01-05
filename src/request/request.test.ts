@@ -81,7 +81,7 @@ describe('request', (): void => {
             expect(authorizationHeader).not.toBeNull();
             expect(authorizationHeader).toBe(
                 'Basic ' +
-                Buffer.from(username + ':' + token).toString('base64')
+                    Buffer.from(username + ':' + token).toString('base64')
             );
         });
 

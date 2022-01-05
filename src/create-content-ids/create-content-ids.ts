@@ -92,9 +92,8 @@ export function createContentIds(
 
     const dom: jsdom.JSDOM = new jsdom.JSDOM(html);
 
-    const tableCollection: NodeListOf<HTMLTableElement> = dom.window.document.querySelectorAll(
-        'table'
-    );
+    const tableCollection: NodeListOf<HTMLTableElement> =
+        dom.window.document.querySelectorAll('table');
 
     if (tableCollection.length > 0) {
         const resultList: LangMap[] = [];
@@ -104,9 +103,8 @@ export function createContentIds(
             tableIndex < tableCollection.length;
             tableIndex++
         ) {
-            const trCollection: NodeListOf<HTMLTableRowElement> = tableCollection
-                .item(tableIndex)
-                .querySelectorAll('tr');
+            const trCollection: NodeListOf<HTMLTableRowElement> =
+                tableCollection.item(tableIndex).querySelectorAll('tr');
 
             if (
                 trCollection?.length > 1 &&
@@ -128,9 +126,8 @@ export function createContentIds(
                         headlineIndex < headlines.length;
                         headlineIndex++
                     ) {
-                        const langCode: string | null = headlines.item(
-                            headlineIndex
-                        ).textContent;
+                        const langCode: string | null =
+                            headlines.item(headlineIndex).textContent;
 
                         if (langCode) {
                             langMap.set(langCode, new Map());
@@ -149,9 +146,8 @@ export function createContentIds(
                         rowIndex < trCollection.length;
                         rowIndex++
                     ) {
-                        const tdCollection: NodeListOf<HTMLTableCellElement> = trCollection
-                            .item(rowIndex)
-                            .querySelectorAll('td');
+                        const tdCollection: NodeListOf<HTMLTableCellElement> =
+                            trCollection.item(rowIndex).querySelectorAll('td');
 
                         let key: string | null = tdCollection.item(
                             identifierColumnIndex
