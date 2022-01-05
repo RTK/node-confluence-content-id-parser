@@ -1,6 +1,6 @@
 import {LogLevel, setLoggerLevel} from '@rtk/node-ts-cli-toolkit';
 
-import {describe, expect} from '@jest/globals';
+import {describe, expect, it} from '@jest/globals';
 
 import {createContentIds, LangMap} from './create-content-ids';
 
@@ -26,6 +26,9 @@ describe('create-content-ids', (): void => {
         it('should create a langMap list containing the languages en and de', (): void => {
             const result: readonly LangMap[] = createContentIds(
                 /^Content-Ids$/,
+                true,
+                0,
+                0,
                 dom
             );
 
@@ -43,6 +46,9 @@ describe('create-content-ids', (): void => {
         it('should create list with two entries since two tables are provided', (): void => {
             const result: readonly LangMap[] = createContentIds(
                 /^Content-Ids$/,
+                true,
+                0,
+                0,
                 dom + dom
             );
 
@@ -52,6 +58,9 @@ describe('create-content-ids', (): void => {
         it('should create a list without entries since the recognition pattern does not match', (): void => {
             const result: readonly LangMap[] = createContentIds(
                 /^Content-Id$/,
+                true,
+                0,
+                0,
                 dom
             );
 

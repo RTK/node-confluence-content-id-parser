@@ -19,14 +19,58 @@ export type LangMap = Map<string, StringMap>;
  * column and generates a LangMap from it.
  *
  * @example
+ * ```
  * recognitionPattern: ^Content-Id$
  *
  * |Content-Id|en|de|
  * |t1|hat|Hut|
- *
+ *`
  * Creates a map using "en" and "de" as keys, where as each key references
  * a string map where the content id ("t1") references the languages translation
  * such as "hat" or "Hut" depending on the language.
+ *```
+ *
+ * When providing the `trimContent` argument, the contents of each cell get any
+ * whitespaces trimmed (preceding and subsequent whitespaces).
+ *
+ * @example
+ * ```
+ * trimContent: true
+ *
+ * |Content-Id|en|de|
+ * |t1| hat |  Hut   |
+ *
+ * Results in the mapping
+ * {
+ *  "en": {
+ *      "t1": "hat"
+ *  },
+ *  "de": {
+ *      "t1": "Hut"
+ *  }
+ * }
+ * ```
+ *
+ * By setting the `identifierColumnIndex` argument you can choose at which
+ * column index the content-id resides.
+ *
+ * @example
+ * ```
+ * identifierColumnIndex: 1
+ *
+ * |Description|Content-Id|en|
+ * |something to wear|t1|hat|
+ * ```
+ *
+ * The `startingColumnIndex` argument indicates at which column the translation
+ * strings are placed.
+ *
+ * @example
+ * ```
+ * startingColumnIndex: 2
+ * |Content-Id|Description|en|
+ * |t1|something to wear|hat|
+ * ```
  *
  * @param recognitionPattern
  * @param trimContent
@@ -46,14 +90,14 @@ export function createContentIds(
         'Creating content ids from confluence page'
     );
 
-    const dom = new jsdom.JSDOM(html);
+    const dom: jsdom.JSDOM = new jsdom.JSDOM(html);
 
     const tableCollection: NodeListOf<HTMLTableElement> = dom.window.document.querySelectorAll(
         'table'
     );
 
     if (tableCollection.length > 0) {
-        const results = [];
+        const resultList: LangMap[] = [];
 
         for (
             let tableIndex = 0;
@@ -68,7 +112,7 @@ export function createContentIds(
                 trCollection?.length > 1 &&
                 trCollection.item(0).querySelectorAll('th').length > 0
             ) {
-                const headlines: NodeListOf<HTMLTableHeaderCellElement> = trCollection
+                const headlines: NodeListOf<HTMLTableCellElement> = trCollection
                     .item(0)
                     .querySelectorAll('th');
 
@@ -77,7 +121,7 @@ export function createContentIds(
                 if (
                     recognitionPattern.test(headlines.item(0).textContent ?? '')
                 ) {
-                    const languages: string[] = [];
+                    const languageList: string[] = [];
 
                     for (
                         let headlineIndex = startingColumnIndex;
@@ -91,7 +135,7 @@ export function createContentIds(
                         if (langCode) {
                             langMap.set(langCode, new Map());
 
-                            languages.push(langCode);
+                            languageList.push(langCode);
 
                             writeLoggerOutput(
                                 LogLevel.Verbose,
@@ -124,7 +168,7 @@ export function createContentIds(
                                 tdIndex++
                             ) {
                                 const langIndex =
-                                    languages[tdIndex - startingColumnIndex];
+                                    languageList[tdIndex - startingColumnIndex];
 
                                 // Fallback to key for easy identification of missing translations
                                 let translation: string | null =
@@ -144,7 +188,7 @@ export function createContentIds(
                         }
                     }
 
-                    results.push(langMap);
+                    resultList.push(langMap);
                 } else {
                     writeLoggerOutput(
                         LogLevel.Warn,
@@ -154,7 +198,7 @@ export function createContentIds(
             }
         }
 
-        return results;
+        return resultList;
     }
 
     throw new Error(`Could not create string mapping`);

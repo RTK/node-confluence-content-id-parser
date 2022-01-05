@@ -1,54 +1,71 @@
 import {LogLevel, setLoggerLevel} from '@rtk/node-ts-cli-toolkit';
 
-import {describe, expect} from '@jest/globals';
+import {
+    afterAll,
+    beforeAll,
+    beforeEach,
+    describe,
+    expect,
+    it
+} from '@jest/globals';
 
 import * as http from 'http';
 
 import {requestPage} from './request';
+import {DoneFn} from '@jest/types/build/Global';
 
 describe('request', (): void => {
     setLoggerLevel(LogLevel.Silent);
 
     describe('requestPage()', (): void => {
-        const hostname = '0.0.0.0';
-        const port = 65535;
+        const hostname = 'localhost';
+        const port = 8888;
         const baseUrl = `http://${hostname}:${port}`;
         const html = '<div>test</div>';
 
         let authorizationHeader: string | null = null;
         let url: string | null = null;
 
-        let server: http.Server = http.createServer(
-            (
-                request: http.IncomingMessage,
-                response: http.ServerResponse
-            ): void => {
-                authorizationHeader = request.headers?.authorization ?? null;
-                url = request.url ?? null;
+        let server: http.Server;
 
-                response.write(
-                    JSON.stringify({
-                        body: {
-                            view: {
-                                value: html
+        beforeAll((doneFn: DoneFn): void => {
+            server = http.createServer(
+                (
+                    request: http.IncomingMessage,
+                    response: http.ServerResponse
+                ): void => {
+                    authorizationHeader =
+                        request.headers?.authorization ?? null;
+                    url = request.url ?? null;
+
+                    response.write(
+                        JSON.stringify({
+                            body: {
+                                view: {
+                                    value: html
+                                }
                             }
-                        }
-                    })
-                );
+                        })
+                    );
 
-                response.end();
-            }
-        );
+                    response.end();
+                }
+            );
 
-        server.listen(port, hostname);
+            server.listen(port, hostname, (): void => {
+                doneFn();
+            });
+        });
 
         beforeEach((): void => {
             authorizationHeader = null;
             url = null;
         });
 
-        afterAll((): void => {
-            server.close();
+        afterAll((doneFn: DoneFn): void => {
+            server.close(() => {
+                doneFn();
+            });
         });
 
         it('should request the server with the correct url and authorization header', async (): Promise<void> => {
@@ -64,7 +81,7 @@ describe('request', (): void => {
             expect(authorizationHeader).not.toBeNull();
             expect(authorizationHeader).toBe(
                 'Basic ' +
-                    Buffer.from(username + ':' + token).toString('base64')
+                Buffer.from(username + ':' + token).toString('base64')
             );
         });
 

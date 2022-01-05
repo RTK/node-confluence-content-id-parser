@@ -1,7 +1,7 @@
-import {LogLevel, writeLoggerOutput} from '@rtk/node-ts-cli-toolkit';
-
 import * as fs from 'fs';
 import * as path from 'path';
+
+import {LogLevel, writeLoggerOutput} from '@rtk/node-ts-cli-toolkit';
 
 import type {LangMap} from '../create-content-ids/create-content-ids';
 
@@ -27,23 +27,23 @@ export function generateFiles(
 
     fs.mkdirSync(outputDirectory);
 
-    const mergedMap = new Map();
+    const mergedMap: Map<string, Map<string, string>> = new Map();
 
     for (const stringMap of langMap) {
         for (const [langCode, translationMap] of stringMap.entries()) {
             if (!mergedMap.has(langCode)) {
-                mergedMap.set(langCode, new Map());
+                mergedMap.set(langCode, new Map<string, string>());
             }
 
             for (const [stringKey, stringValue] of translationMap.entries()) {
-                mergedMap.get(langCode).set(stringKey, stringValue);
+                mergedMap.get(langCode)!.set(stringKey, stringValue);
             }
         }
     }
 
     for (const [key, value] of mergedMap.entries()) {
         try {
-            const filePath = path.join(outputDirectory, `${key}.json`);
+            const filePath: string = path.join(outputDirectory, `${key}.json`);
 
             const obj: Record<string, string> = {};
 
@@ -66,10 +66,10 @@ export function generateFiles(
  * @param dir - Path to directory which will be removed
  */
 export function rmdir(dir: string): void {
-    const files = fs.readdirSync(dir);
+    const fileList: readonly string[] = fs.readdirSync(dir);
 
-    for (const file of files) {
-        const filePath = path.join(dir, file);
+    for (const file of fileList) {
+        const filePath: string = path.join(dir, file);
 
         if (fs.statSync(filePath).isDirectory()) {
             rmdir(filePath);

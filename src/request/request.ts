@@ -1,7 +1,7 @@
-import {LogLevel, writeLoggerOutput} from '@rtk/node-ts-cli-toolkit';
-
 import * as http from 'http';
 import * as https from 'https';
+
+import {LogLevel, writeLoggerOutput} from '@rtk/node-ts-cli-toolkit';
 
 /**
  * Performs an http(s) request to provided confluence instance using the
@@ -24,7 +24,7 @@ export async function requestPage(
 ): Promise<string> {
     writeLoggerOutput(LogLevel.Verbose, 'Request confluence page via API');
 
-    let authorizationString;
+    let authorizationString: string;
 
     if (confluenceUsername) {
         authorizationString = `Basic ${Buffer.from(
@@ -34,7 +34,7 @@ export async function requestPage(
         authorizationString = `Bearer ${confluenceUserToken}`;
     }
 
-    const url = `${confluenceBaseUri}/rest/api/content/${confluencePageId}?expand=body.view`;
+    const url: string = `${confluenceBaseUri}/rest/api/content/${confluencePageId}?expand=body.view`;
 
     const options: http.RequestOptions = {
         headers: {
@@ -66,7 +66,7 @@ function onReceive(
     url: string
 ): (response: http.IncomingMessage) => void {
     return (response: http.IncomingMessage): void => {
-        const chunks: string[] = [];
+        const chunkList: string[] = [];
 
         if (response.statusCode !== 200) {
             throw new Error(
@@ -75,11 +75,11 @@ function onReceive(
         }
 
         response.on('data', (data: string): void => {
-            chunks.push(data);
+            chunkList.push(data);
         });
 
         response.on('end', (): void => {
-            const content = chunks.join('');
+            const content: string = chunkList.join('');
 
             try {
                 resolve(JSON.parse(content).body.view.value);

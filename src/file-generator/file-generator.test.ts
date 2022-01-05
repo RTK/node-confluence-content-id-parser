@@ -1,6 +1,6 @@
 import {LogLevel, setLoggerLevel} from '@rtk/node-ts-cli-toolkit';
 
-import {describe, expect} from '@jest/globals';
+import {afterEach, describe, expect, it} from '@jest/globals';
 
 import * as fs from 'fs';
 import * as path from 'path';
