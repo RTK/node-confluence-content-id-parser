@@ -1,5 +1,63 @@
 # node-confluence-content-id-parser
 
+## About
+
+This project provides a Command Line Interface (CLI) for automatic data processing
+of Atlassian Confluence instances e.g. for localization purposes.
+
+The `node-confluence-content-id-parser` requests a confluence instance with
+credentials and crawls all tables of a destination page. Afterwards all tables
+will be broke up into maps of language identifiers and string identifiers. All
+maps will be merged in the end and encoded into a JavaScript Object Notation
+string which will be persisted into a file named after its corresponding
+language identifier.
+
+### Example
+
+Your confluence instance hosts a page e.g. `Translations for our landingpage`
+with the page identifier `123456`. The page contains a table, e.g.
+
+| String-Id    | en                      | es                                |
+| ------------ | ----------------------- | --------------------------------- |
+| headline     | Welcome to our page     | Bienvenido a nuestra página       |
+| sub-headline | This is our landingpage | Esta es nuestra página de destino |
+
+When invoking the tool with the arguments
+
+-   --confluence-base-uri=https://ourcompanies.confluence
+-   --confluence-page-id=123456
+-   --confluence-username=MyUsername
+-   --confluence-user-token=MyPassword
+-   --recognition-pattern=^String-Id$
+-   --output-directory=i18n
+
+There will be two files in the `i18n` directory:
+
+-   en.json
+-   es.json
+
+With the following contents:
+
+_en.json_
+
+```
+json
+{
+    "headline": "Welcome to our page",
+    "sub-headline": "This is our landingpage"
+}
+```
+
+_es.json_
+
+```
+json
+{
+    "headline": "Bienvenido a nuestra página",
+    "sub-headline": "Esta es nuestra página de destino"
+}
+```
+
 ## Installation
 
 ```shell
